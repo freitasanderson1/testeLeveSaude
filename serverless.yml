@@ -1,4 +1,4 @@
-service: agenda-sistema
+service: testeLeveSaude
 
 provider:
   name: aws
@@ -7,7 +7,7 @@ provider:
 
 plugins:
   - serverless-offline
-
+  
 functions:
   getAgendas:
     handler: dist/agenda/controller.getAgendas
@@ -15,7 +15,7 @@ functions:
       - http:
           path: agendas
           method: get
-
+          
   postAgendamento:
     handler: dist/agendamento/controller.postAgendamento
     events:
