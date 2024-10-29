@@ -6,6 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - .:/usr/src/app
+    environment:
+      - NODE_ENV=development
+      - SERVERLESS_ACCESS_KEY=##########  # Substituir pela chave
+    command: npm run start
