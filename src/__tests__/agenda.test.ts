@@ -34,7 +34,7 @@ describe("Agenda Controller", () => {
           sourceIp: "127.0.0.1",
           user: null,
           userAgent: "PostmanRuntime/7.26.8",
-          userArn: null
+          userArn: null,
         },
         path: "/agendas",
         stage: "dev",
@@ -42,10 +42,10 @@ describe("Agenda Controller", () => {
         requestTimeEpoch: 1639167838897,
         resourceId: "resourceId",
         resourcePath: "/agendas",
-        protocol: "HTTP/1.1"
+        protocol: "HTTP/1.1",
       },
       resource: "/agendas",
-      stageVariables: null
+      stageVariables: null,
     };
 
     const response = await getAgendas(event, {} as any, () => {});

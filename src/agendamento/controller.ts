@@ -1,10 +1,18 @@
 import { APIGatewayProxyHandler, APIGatewayProxyEvent } from "aws-lambda";
 import { agendaMock } from "../agenda/mocks";
 
-const agendamentosFeitos: { medico_id: number; data_horario: string; paciente_nome: string }[] = [];
+const agendamentosFeitos: {
+  medico_id: number;
+  data_horario: string;
+  paciente_nome: string;
+}[] = [];
 
-export const postAgendamento: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent) => {
-  const { medico_id, paciente_nome, data_horario } = JSON.parse(event.body || "{}");
+export const postAgendamento: APIGatewayProxyHandler = async (
+  event: APIGatewayProxyEvent,
+) => {
+  const { medico_id, paciente_nome, data_horario } = JSON.parse(
+    event.body || "{}",
+  );
 
   // Verifica se o médico existe
   const medico = agendaMock.find((m) => m.id === medico_id);
@@ -28,7 +36,9 @@ export const postAgendamento: APIGatewayProxyHandler = async (event: APIGatewayP
 
   // Verifica se o horário já foi agendado
   const horarioJaAgendado = agendamentosFeitos.some(
-    (agendamento) => agendamento.medico_id === medico_id && agendamento.data_horario === data_horario
+    (agendamento) =>
+      agendamento.medico_id === medico_id &&
+      agendamento.data_horario === data_horario,
   );
   if (horarioJaAgendado) {
     return {
@@ -43,12 +53,16 @@ export const postAgendamento: APIGatewayProxyHandler = async (event: APIGatewayP
   agendamentosFeitos.push({ medico_id, data_horario, paciente_nome });
 
   // Remove o horário do mock
-  medico.horarios_disponiveis = medico.horarios_disponiveis.filter(h => h !== data_horario);
+  medico.horarios_disponiveis = medico.horarios_disponiveis.filter(
+    (h) => h !== data_horario,
+  );
 
   // Log dos agendamentos
   console.log(`Agendamentos Feitos: ${JSON.stringify(agendamentosFeitos)}`);
-  agendamentosFeitos.forEach((agendamento) => 
-    console.log(`Item: ${agendamento.medico_id} ${agendamento.paciente_nome} ${agendamento.data_horario}`)
+  agendamentosFeitos.forEach((agendamento) =>
+    console.log(
+      `Item: ${agendamento.medico_id} ${agendamento.paciente_nome} ${agendamento.data_horario}`,
+    ),
   );
 
   return {

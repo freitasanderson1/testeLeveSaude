@@ -3,7 +3,11 @@ export const agendaMock = [
     id: 1,
     nome: "Dr. João Silva",
     especialidade: "Cardiologista",
-    horarios_disponiveis: ["2024-10-05 09:00", "2024-10-05 10:00", "2024-10-05 11:00"],
+    horarios_disponiveis: [
+      "2024-10-05 09:00",
+      "2024-10-05 10:00",
+      "2024-10-05 11:00",
+    ],
   },
   {
     id: 2,

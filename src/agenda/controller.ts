@@ -1,12 +1,17 @@
 import { agendaMock } from "./mocks";
-import { APIGatewayProxyEvent, Context, Callback, APIGatewayProxyResult } from 'aws-lambda';
+import {
+  APIGatewayProxyEvent,
+  Context,
+  Callback,
+  APIGatewayProxyResult,
+} from "aws-lambda";
 
 export const getAgendas = async (
   event: APIGatewayProxyEvent,
   context: Context,
-  callback: Callback<APIGatewayProxyResult>
+  callback: Callback<APIGatewayProxyResult>,
 ): Promise<APIGatewayProxyResult> => {
-  const horariosLivres = agendaMock.map(medico => ({
+  const horariosLivres = agendaMock.map((medico) => ({
     id: medico.id,
     nome: medico.nome,
     especialidade: medico.especialidade,
