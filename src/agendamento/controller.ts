@@ -1,5 +1,5 @@
-import { APIGatewayProxyHandler, APIGatewayProxyEvent } from "aws-lambda";
-import { agendaMock } from "../agenda/mocks";
+import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
+import { agendaMock } from '../agenda/mocks';
 
 const agendamentosFeitos: {
   medico_id: number;
@@ -11,7 +11,7 @@ export const postAgendamento: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent,
 ) => {
   const { medico_id, paciente_nome, data_horario } = JSON.parse(
-    event.body || "{}",
+    event.body || '{}',
   );
 
   // Verifica se o médico existe
@@ -19,7 +19,7 @@ export const postAgendamento: APIGatewayProxyHandler = async (
   if (!medico) {
     return {
       statusCode: 404,
-      body: JSON.stringify({ mensagem: "Médico não encontrado" }),
+      body: JSON.stringify({ mensagem: 'Médico não encontrado' }),
     };
   }
 
@@ -29,7 +29,7 @@ export const postAgendamento: APIGatewayProxyHandler = async (
     return {
       statusCode: 400,
       body: JSON.stringify({
-        mensagem: "Horário não disponível para agendamento",
+        mensagem: 'Horário não disponível para agendamento',
       }),
     };
   }
@@ -44,7 +44,7 @@ export const postAgendamento: APIGatewayProxyHandler = async (
     return {
       statusCode: 400,
       body: JSON.stringify({
-        mensagem: "Esse horário já foi agendado. Por favor, escolha outro.",
+        mensagem: 'Esse horário já foi agendado. Por favor, escolha outro.',
       }),
     };
   }
@@ -53,9 +53,9 @@ export const postAgendamento: APIGatewayProxyHandler = async (
   agendamentosFeitos.push({ medico_id, data_horario, paciente_nome });
 
   // Remove o horário do mock
-  medico.horarios_disponiveis = medico.horarios_disponiveis.filter(
-    (h) => h !== data_horario,
-  );
+  // medico.horarios_disponiveis = medico.horarios_disponiveis.filter(
+  //   (h) => h !== data_horario,
+  // );
 
   // Log dos agendamentos
   console.log(`Agendamentos Feitos: ${JSON.stringify(agendamentosFeitos)}`);
@@ -68,7 +68,7 @@ export const postAgendamento: APIGatewayProxyHandler = async (
   return {
     statusCode: 201,
     body: JSON.stringify({
-      mensagem: "Agendamento realizado com sucesso",
+      mensagem: 'Agendamento realizado com sucesso',
       agendamento: {
         medico: medico.nome,
         paciente: paciente_nome,

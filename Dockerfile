@@ -8,6 +8,9 @@ RUN npm install
 
 COPY . .
 
+# Adicione suas credenciais
+# COPY .aws/credentials /root/.aws/credentials
+
 RUN npm run build
 
 EXPOSE 3000

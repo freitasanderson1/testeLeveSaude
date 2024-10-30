@@ -1,15 +1,15 @@
-import { pathsToModuleNameMapper } from "ts-jest";
-import { compilerOptions } from "./tsconfig.json";
+import { pathsToModuleNameMapper } from 'ts-jest';
+import { compilerOptions } from './tsconfig.json';
 
 export default {
-  preset: "ts-jest",
-  testEnvironment: "node",
+  preset: 'ts-jest',
+  testEnvironment: 'node',
   moduleNameMapper: {
-    "^src/(.*)$": "<rootDir>/src/$1",
-    "^@/(.*)$": "<rootDir>/src/$1",
+    '^src/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
     ...pathsToModuleNameMapper(compilerOptions.paths || {}, {
-      prefix: "<rootDir>/",
+      prefix: '<rootDir>/',
     }),
   },
-  moduleDirectories: ["node_modules", "src"],
+  moduleDirectories: ['node_modules', 'src'],
 };

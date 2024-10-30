@@ -1,10 +1,10 @@
-import { agendaMock } from "./mocks";
+import { agendaMock } from './mocks';
 import {
   APIGatewayProxyEvent,
   Context,
   Callback,
   APIGatewayProxyResult,
-} from "aws-lambda";
+} from 'aws-lambda';
 
 export const getAgendas = async (
   event: APIGatewayProxyEvent,

@@ -11,8 +11,7 @@ Este projeto é uma API desenvolvida com **Node.js v20**, **TypeScript**, **Serv
 - [Endpoints](#endpoints)
 - [Testes](#testes)
 - [Boas Práticas](#boas-práticas)
-- [Estrutura de Pastas](#estrutura-de-pastas)
-- [Autor](#autor)
+- [Docker](#docker)
 
 ## Descrição
 
@@ -42,17 +41,15 @@ As respostas são **mockadas** para fins de teste e não requerem integração c
    ```bash
     npm install
    ```
-3. **Configure o Serverless Framework: Certifique-se de que o Serverless Framework está instalado globalmente e configure as credenciais da AWS se planeja fazer o deploy:**
-   ```bash
-   npm install -g serverless
-   ```
+
+#
 
 ## Execução do Projeto
 
-Para rodar o projeto localmente, utilize o serverless-offline:
+Para rodar o projeto localmente, utilize:
 
 ```
-npx serverless offline
+npm run start
 ```
 
 A API estará disponível em http://localhost:3000.
@@ -92,37 +89,101 @@ A API estará disponível em http://localhost:3000.
 2. **Marcar Agendamento**
    Rota: POST /agendamento
 
-   Descrição: Permite que o paciente marque uma consulta.
+Descrição: Permite que o paciente marque uma consulta.
 
-   Payload Esperado:
+### Exemplos de Payloads:
 
-   ```json
-   {
-     "medico_id": 1,
-     "paciente_nome": "Carlos Almeida",
-     "data_horario": "2024-10-05 09:00"
-   }
-   ```
+Payload Esperado:
 
-   Exemplo de Resposta:
+```json
+{
+  "medico_id": 1,
+  "paciente_nome": "Carlos Almeida",
+  "data_horario": "2024-10-05 09:00"
+}
+```
 
-   ```json
-   {
-     "mensagem": "Agendamento realizado com sucesso",
-     "agendamento": {
-       "medico": "Dr. João Silva",
-       "paciente": "Carlos Almeida",
-       "data_horario": "2024-10-05 09:00"
-     }
-   }
-   ```
+Exemplo de Resposta:
+
+```json
+{
+  "mensagem": "Agendamento realizado com sucesso",
+  "agendamento": {
+    "medico": "Dr. João Silva",
+    "paciente": "Carlos Almeida",
+    "data_horario": "2024-10-05 09:00"
+  }
+}
+```
+
+##
+
+Payload "Horário já ocupado":
+
+```json
+{
+  "medico_id": 1,
+  "paciente_nome": "Carlos Almeida",
+  "data_horario": "2024-10-05 09:00"
+}
+```
+
+Exemplo de Resposta:
+
+```json
+{
+  "mensagem": "Esse horário já foi agendado. Por favor, escolha outro."
+}
+```
+
+##
+
+Payload "Horário não disponível":
+
+```json
+{
+  "medico_id": 1,
+  "paciente_nome": "Carlos Almeida",
+  "data_horario": "2024-10-05 08:00"
+}
+```
+
+Exemplo de Resposta:
+
+```json
+{
+  "mensagem": "Horário não disponível para agendamento"
+}
+```
+
+##
+
+Payload "Médico não encontrado":
+
+```json
+{
+  "medico_id": 3,
+  "paciente_nome": "Carlos Almeida",
+  "data_horario": "2024-10-05 08:00"
+}
+```
+
+Exemplo de Resposta:
+
+```json
+{
+  "mensagem": "Médico não encontrado"
+}
+```
+
+##
 
 ## Testes
 
 Para rodar os testes unitários, utilize o comando:
 
 ```
-npx test
+npm run test
 ```
 
 ## Boas Práticas
@@ -130,6 +191,41 @@ npx test
 O projeto utiliza ESLint e Prettier para garantir a qualidade do código. Para executar a formatação e verificação, utilize:
 
 ```bash
-npx eslint . --fix
-npx prettier --write .
+npm run lint
+npm run format
+```
+
+## Docker
+
+#### Dockerfile
+
+O Dockerfile está configurado para construir a imagem da aplicação. Para construir a imagem e rodar a aplicação, utilize o seguinte comando:
+
+```bash
+docker-compose up --build
+```
+
+Na linha 12 do arquivo Dockerfile, você pode colocar o Path para a localização de suas credenciais AWS:
+
+```
+COPY .aws/credentials /root/.aws/credentials
+```
+
+- Você precisa garantir que o diretório .aws esteja em seu contexto de build e que contenha o arquivo credentials.
+
+#### docker-compose.yml
+
+O arquivo docker-compose.yml define a configuração do contêiner, incluindo variáveis de ambiente e portas.
+
+Em SERVERLESS_ACCESS_KEY você vai colocar sua ACESS_KEY do Serverless:
+
+```
+SERVERLESS_ACCESS_KEY=#SEU_ACCESS_KEY_SERVERLESS
+```
+
+Em AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY você vai colocar suas KEYS da AWS:
+
+```
+- AWS_ACCESS_KEY_ID=######SEU_ACCESS_KEY_AWS
+- AWS_SECRET_ACCESS_KEY=####SEU_SECRET_KEY_AWS
 ```

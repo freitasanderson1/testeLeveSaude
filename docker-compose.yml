@@ -11,5 +11,7 @@ services:
       - .:/usr/src/app
     environment:
       - NODE_ENV=development
-      - SERVERLESS_ACCESS_KEY=##########  # Substituir pela chave
-    command: npm run start
+      - SERVERLESS_ACCESS_KEY=#SEU_ACCESS_KEY_SERVERLESS
+      - AWS_ACCESS_KEY_ID=######SEU_ACCESS_KEY_AWS
+      - AWS_SECRET_ACCESS_KEY=####SEU_SECRET_KEY_AWS
+    command: npm run deploy
